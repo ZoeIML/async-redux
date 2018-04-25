@@ -9,7 +9,11 @@ const Subreddit = ({subreddits}) => (
       <Post
         key={i}
         title={post.title}
+        date={[Date(post.created * 1000)]}
+        author={post.author}
+
       />
+      // console.log(new Date(post.created * 1000))
     )}
   </div>
 )
