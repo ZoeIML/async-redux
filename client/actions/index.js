@@ -42,24 +42,22 @@ export function fetchPosts (subreddit) {
 
 const hpUrl = 'http://hp-api.herokuapp.com/api/characters'
 
-// export const requestCharacters = () => {
-//   return {
-//     type: REQUEST_CHAR
-//   }
-// }
+export const requestCharacters = () => {
+  return {
+    type: REQUEST_CHAR
+  }
+}
 
 export const receiveCharacters = (characters) => {
   return {
     type: RECEIVE_CHAR,
-    characters: characters.map(character => {
-      return character
-    })
+    characters
   }
 }
 
 export function fetchCharacters () {
   return (dispatch) => {
-    dispatch(receiveCharacters())
+    dispatch(requestCharacters())
     return request
       .get(hpUrl)
       .then(res => {
