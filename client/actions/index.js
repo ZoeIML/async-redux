@@ -3,6 +3,8 @@ import request from 'superagent'
 export const SHOW_ERROR = 'SHOW_ERROR'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const REQUEST_POSTS = 'REQUEST_POSTS'
+export const REQUEST_CHAR = 'REQUEST_CHAR'
+export const RECEIVE_CHAR = 'RECEIVE_CHAR'
 
 export const requestPosts = () => {
   return {
@@ -31,6 +33,37 @@ export function fetchPosts (subreddit) {
       .get(`/api/v1/reddit/subreddit/${subreddit}`)
       .then(res => {
         dispatch(receivePosts(res.body))
+      })
+      .catch(err => {
+        dispatch(showError(err.message))
+      })
+  }
+}
+
+const hpUrl = 'http://hp-api.herokuapp.com/api/characters'
+
+// export const requestCharacters = () => {
+//   return {
+//     type: REQUEST_CHAR
+//   }
+// }
+
+export const receiveCharacters = (characters) => {
+  return {
+    type: RECEIVE_CHAR,
+    characters: characters.map(character => {
+      return character
+    })
+  }
+}
+
+export function fetchCharacters () {
+  return (dispatch) => {
+    dispatch(receiveCharacters())
+    return request
+      .get(hpUrl)
+      .then(res => {
+        dispatch(receiveCharacters(res.body))
       })
       .catch(err => {
         dispatch(showError(err.message))
